@@ -2,7 +2,9 @@ package utils
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -20,7 +22,7 @@ func ConnectToMongo() (*mongo.Client, error) {
 
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
 	clientOptions := options.Client().
-		ApplyURI("mongodb+srv://karl:i4G0h0jQxzI4LtcH@cluster0.dlyuny6.mongodb.net/?retryWrites=true&w=majority").
+		ApplyURI(fmt.Sprintf("mongodb+srv://karl:%s@cluster0.dlyuny6.mongodb.net/?retryWrites=true&w=majority", os.Getenv("MONGO_PASS"))).
 		SetServerAPIOptions(serverAPIOptions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
